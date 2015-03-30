@@ -1,22 +1,28 @@
-" pathogen config
-execute pathogen#infect()
-syntax on
-filetype plugin indent on
-" set omnifunc=syntaxcomplete#Complete
-
-" don't bother with vi compatibility
+" Vundle Stuff
 set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-commentary'
+call vundle#end()
 
-" set 256 colors
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
+let google_path = $HOME . '/.vimrc.google'
+let at_google = filereadable( google_path )
 
 " enable syntax highlighting
 syntax enable
-set background=dark
-" let g:solarized_termcolors=256
-colorscheme solarized
+" set 256 colors
+if $COLORTERM == 'gnome-terminal'
+ set t_Co=256
+  set background=dark
+  let g:solarized_termcolors=16
+  colorscheme solarized
+endif
+
 
 " ensure ftdetect et al work by including this after the Vundle stuff
 filetype plugin indent on
@@ -58,23 +64,15 @@ nmap <leader>q :AgFromSearch<CR>
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
-nmap <leader>i :UnusedImportsRemove<CR>
-nmap <leader>t :CtrlP<CR>
-nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
-nmap <leader>] :TagbarToggle<CR>
-nmap <leader><space> :call whitespace#strip_trailing()<CR>
-nmap <leader>g :GitGutterToggle<CR>
 nmap <leader>c <Plug>Kwbd
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 map <Esc><Esc> :w<CR>
-nnoremap S "_diwP
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
-let g:rspec_runner = "br rspec {spec}"
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -84,15 +82,20 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+        \ --ignore .git
+        \ --ignore .svn
+        \ --ignore .hg
+        \ --ignore .DS_Store
+        \ --ignore "**/*.pyc"
+        \ --ignore review
+        \ -g ""'
 endif
 
-" fdoc is yaml
-autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
-" md is markdown
-autocmd BufRead,BufNewFile *.md set filetype=markdown
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-" let g:NERDTreeDirArrows=0
-set runtimepath^=~/.vim/bundle/ctrlp.vim,~/.vim/ns9tks-vim-autocomplpop-13fe3d806464/,~/.vim/ns9tks-vim-l9-3bb534a720fa/
+" Load some other configurations if we are at Google
+if at_google
+  exec 'source ' . google_path
+endif
