@@ -9,6 +9,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-commentary'
 Plugin 'rking/ag.vim'
+Plugin 'altercation/vim-colors-solarized.git'
 call vundle#end()
 
 let google_path = $HOME . '/.vimrc.google'
@@ -16,13 +17,11 @@ let at_google = filereadable( google_path )
 
 " enable syntax highlighting
 syntax enable
-" set 256 colors
-if $COLORTERM == 'gnome-terminal'
-  set background=dark
-  set t_Co=256
-  let g:solarized_termcolors=16
-  colorscheme solarized
-endif
+" Color scheme stuff
+set background=dark
+set t_Co=256
+let g:solarized_termcolors=16
+colorscheme solarized
 
 
 " ensure ftdetect et al work by including this after the Vundle stuff
