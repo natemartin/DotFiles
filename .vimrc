@@ -8,6 +8,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-commentary'
+Plugin 'rking/ag.vim'
 call vundle#end()
 
 let google_path = $HOME . '/.vimrc.google'
@@ -17,8 +18,8 @@ let at_google = filereadable( google_path )
 syntax enable
 " set 256 colors
 if $COLORTERM == 'gnome-terminal'
- set t_Co=256
   set background=dark
+  set t_Co=256
   let g:solarized_termcolors=16
   colorscheme solarized
 endif
@@ -66,11 +67,12 @@ nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 nmap <leader>c <Plug>Kwbd
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
-map <Esc><Esc> :w<CR>
+nmap <Esc><Esc> :w<CR>
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+map <F4> :SyntasticCheck<CR>
 
 " plugin settings
-let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:ctrlp_match_window = 'order:ttb,max:40'
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
 
@@ -94,6 +96,10 @@ endif
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
+
+" Close omni-complete tip window after selection is made
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " Load some other configurations if we are at Google
 if at_google
