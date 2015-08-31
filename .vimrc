@@ -10,6 +10,8 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-commentary'
 Plugin 'rking/ag.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'altercation/vim-colors-solarized.git'
+Plugin 'fatih/vim-go'
 call vundle#end()
 
 let google_path = $HOME . '/.vimrc.google'
@@ -17,13 +19,11 @@ let at_google = filereadable( google_path )
 
 " enable syntax highlighting
 syntax enable
-" set 256 colors
-if $COLORTERM == 'gnome-terminal'
-  set background=dark
-  set t_Co=256
-  let g:solarized_termcolors=16
-  colorscheme solarized
-endif
+" Color scheme stuff
+set background=dark
+set t_Co=256
+let g:solarized_termcolors=16
+colorscheme solarized
 
 
 " ensure ftdetect et al work by including this after the Vundle stuff
@@ -49,7 +49,7 @@ set shiftwidth=2                                             " normal mode inden
 set showcmd
 set smartcase                                                " case-sensitive search if any caps
 set softtabstop=2                                            " insert mode tab and backspace use 2 spaces
-set tabstop=8                                                " actual tabs occupy 8 characters
+set tabstop=4                                                " actual tabs occupy 8 characters
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list,full
@@ -102,6 +102,9 @@ autocmd VimResized * :wincmd =
 " Close omni-complete tip window after selection is made
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+" Indent changes for golang
+autocmd FileType go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4 nolist
 
 " Load some other configurations if we are at Google
 if at_google
