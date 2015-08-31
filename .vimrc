@@ -9,6 +9,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-commentary'
 Plugin 'rking/ag.vim'
+Plugin 'majutsushi/tagbar'
 call vundle#end()
 
 let google_path = $HOME . '/.vimrc.google'
@@ -64,6 +65,7 @@ nmap <leader>a :Ag!<space>
 nmap <leader>q :AgFromSearch<CR>
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
+nmap <leader>t :TagbarToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 nmap <leader>c <Plug>Kwbd
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
